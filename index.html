@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>By Yusuf Kesici · Özel Dikim & Sartorial Terzihane</title>
+  <meta name="description" content="By Yusuf Kesici · Seçkin İngiliz ve İtalyan kumaşları, kişiye özel tekil kalıplar ve geleneksel el işçiliği. Yalnızca randevu ile hizmet veren özel terzi atölyesi.">
+  <meta name="keywords" content="By Yusuf Kesici, terzi, özel dikim, bespoke terzi, takım elbise, smokin, Nişantaşı terzi, damatlık, Loro Piana, Dormeuil">
+  <meta name="author" content="By Yusuf Kesici">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
+
+  <!-- Google Fonts: Montserrat (Full Turkish latin-ext support) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,600&display=swap&subset=latin,latin-ext" rel="stylesheet">
+
+  <!-- Ana Stil Dosyası -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="curtain-locked">
+
+  <!-- ======================================================================
+       TAM EKRAN KUMAŞ KESEN MAKAS AÇILIŞ ANİMASYONU
+       ====================================================================== -->
+  <div class="intro-curtain running" id="introCurtain" aria-hidden="false">
+    <!-- Sol Kumaş Kanadı -->
+    <div class="curtain-panel curtain-left"></div>
+
+    <!-- Sağ Kumaş Kanadı -->
+    <div class="curtain-panel curtain-right"></div>
+
+    <!-- Merkez Kesim İzi -->
+    <div class="curtain-cut-track">
+      <div class="curtain-cut-line" id="curtainCutLine"></div>
+    </div>
+
+    <!-- Ortada Marka Mührü -->
+    <div class="intro-brand" id="introBrand">
+      <div class="intro-logo-wrap">
+        <img src="assets/logo.png" alt="By Yusuf Kesici Logo" width="72" height="72">
+      </div>
+      <div class="intro-brand-name">By Yusuf Kesici</div>
+    </div>
+
+    <!-- Alttan Yukarı Kumaşı Kesen Terzi Makası -->
+    <div class="scissors-cutter" id="scissorsCutter">
+      <svg class="scissors-svg" viewBox="0 0 120 180" width="110" height="165" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="goldShearGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#dfb94d"/>
+            <stop offset="40%" stop-color="#c59b27"/>
+            <stop offset="100%" stop-color="#8c6a12"/>
+          </linearGradient>
+          <linearGradient id="steelBladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="50%" stop-color="#d6deda"/>
+            <stop offset="100%" stop-color="#9aa8a0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Sol Bıçak & Kol (Merkez (60, 85) etrafında döner) -->
+        <g class="blade-left">
+          <!-- Bıçak Ucu -->
+          <path d="M60 85 L52 8 C53 8 59 40 60 85 Z" fill="url(#steelBladeGrad)" stroke="#687770" stroke-width="0.8"/>
+          <path d="M52 8 L46 80 L60 85 Z" fill="#b8c4be" opacity="0.4"/>
+          <!-- Sap Kolu & Tutacak -->
+          <path d="M60 85 Q50 110 44 125 C34 135 24 150 36 165 C48 175 62 165 58 145 C54 135 56 115 60 85 Z" fill="url(#goldShearGrad)" stroke="#74560a" stroke-width="1.2"/>
+          <!-- Parmak Halkası İçi Boşluk -->
+          <ellipse cx="42" cy="152" rx="10" ry="14" fill="#001509" opacity="0.95" stroke="#74560a" stroke-width="1"/>
+        </g>
+
+        <!-- Sağ Bıçak & Kol (Merkez (60, 85) etrafında döner) -->
+        <g class="blade-right">
+          <!-- Bıçak Ucu -->
+          <path d="M60 85 L68 8 C67 8 61 40 60 85 Z" fill="url(#steelBladeGrad)" stroke="#687770" stroke-width="0.8"/>
+          <path d="M68 8 L74 80 L60 85 Z" fill="#b8c4be" opacity="0.4"/>
+          <!-- Sap Kolu & Başparmak Tutacağı -->
+          <path d="M60 85 Q70 110 76 125 C86 133 94 146 86 162 C76 174 64 163 66 145 C68 135 64 115 60 85 Z" fill="url(#goldShearGrad)" stroke="#74560a" stroke-width="1.2"/>
+          <!-- Başparmak Halkası İçi Boşluk -->
+          <ellipse cx="78" cy="148" rx="8" ry="11" fill="#001509" opacity="0.95" stroke="#74560a" stroke-width="1"/>
+        </g>
+
+        <!-- Merkez Pirinç Perçin & Vida -->
+        <circle cx="60" cy="85" r="4.5" fill="url(#goldShearGrad)" stroke="#4e3b08" stroke-width="1.2"/>
+        <line x1="57" y1="85" x2="63" y2="85" stroke="#4e3b08" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <!-- Geçme Butonu -->
+    <button type="button" class="intro-skip-btn" id="introSkipBtn" aria-label="Giriş Animasyonunu Geç">Geç ✕</button>
+  </div>
+
+  <!-- ======================================================================
+       HEADER / ÜST MENÜ (SADELEŞTİRİLMİŞ & UI KURALLARINA UYGUN)
+       ====================================================================== -->
+  <header class="site-header" id="topHeader">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo" aria-label="By Yusuf Kesici Ana Sayfa">
+        <img src="assets/logo.png" alt="By Yusuf Kesici Logo" width="42" height="42">
+        <span class="brand-name">By Yusuf Kesici</span>
+      </a>
+
+      <nav aria-label="Ana Menü">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#felsefe" class="nav-link">Hakkımızda</a></li>
+          <li><a href="#hizmetler" class="nav-link">Hizmetler</a></li>
+          <li><a href="#surec" class="nav-link">Süreç</a></li>
+          <li><a href="#yorumlar" class="nav-link">Yorumlar</a></li>
+          <li><a href="#randevu" class="nav-link">İletişim</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#randevu" class="btn btn-nav-cta" id="navAppointmentBtn">Randevu Al</a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menüyü Aç" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         HERO SECTION (SADELEŞTİRİLMİŞ & BÜYÜTÜLMÜŞ MAĞAZA FOTOĞRAFI)
+         ====================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-container hero-grid">
+        <div class="hero-content">
+          <span class="editorial-tag">Özel Dikim Terzihane</span>
+
+          <h1 class="hero-title">
+            Kişiye Özel Kalıp & <em>Kusursuz Uyum.</em>
+          </h1>
+
+          <p class="hero-desc">
+            Bedeninize ve duruşunuza özel çıkarılan kalıplar, yüksek kalite kumaşlar ve usta el işçiliğiyle; üzerinize kusursuz oturan takım elbiseler dikiyoruz.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#randevu" class="btn btn-primary">Randevu Alın</a>
+            <a href="#surec" class="btn btn-outline">Süreci İnceleyin</a>
+          </div>
+
+          <div class="hero-appointment-note">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Görüşmelerimiz yalnızca teyitli randevu esasıyla gerçekleştirilmektedir.</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-frame">
+            <img src="assets/hero.jpg" alt="By Yusuf Kesici Özel Dikim Terzihanesi ve Mağaza Vitrini" width="1024" height="1016" loading="eager">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         HAKKIMIZDA & ZANAAT (PHILOSOPHY)
+         ====================================================================== -->
+    <section class="philosophy-section" id="felsefe">
+      <div class="container philosophy-grid">
+        <div class="philosophy-visual">
+          <div class="philosophy-image">
+            <img src="assets/yusuf_kesici.jpg" alt="Yusuf Kesici - Özel Dikim Terzi Ustası ve Atölye Vitrini" width="1024" height="1017" loading="lazy">
+          </div>
+          <div class="philosophy-quote">
+            <p>&ldquo;İyi bir takım elbise üzerinizde ağırlık yapmaz; hareketinizle nefes alan konforlu bir şıklık sunar.&rdquo;</p>
+            <cite>— Yusuf Kesici · Usta Terzi</cite>
+          </div>
+        </div>
+
+        <div class="philosophy-content">
+          <span class="editorial-tag">Terzilik Yaklaşımımız</span>
+          <h2>Kişiye Özel Kalıp & Usta El İşçiliği.</h2>
+          <p class="philosophy-lead">
+            Standart hazır kalıplar yerine; omuz eğiminiz, duruşunuz ve hareket rahatlığınız esas alınarak adınıza sıfırdan kalıp çıkarılır.
+          </p>
+
+          <div class="philosophy-features">
+            <div class="p-feature-item">
+              <div class="p-feature-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="p-feature-text">
+                <strong>Bedeninize Özel Çizilen Kalıp</strong>
+                <span>Milimetrik ölçülerle omuz ve kol boyunuza kusursuz uyum</span>
+              </div>
+            </div>
+
+            <div class="p-feature-item">
+              <div class="p-feature-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="p-feature-text">
+                <strong>Doğal İtalyan & Avrupa Kumaşlar</strong>
+                <span>Nefes alan, dökümlü ve kırışmaya dirençli saf dokumalar</span>
+              </div>
+            </div>
+
+            <div class="p-feature-item">
+              <div class="p-feature-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="p-feature-text">
+                <strong>Birebir Prova & Atölye Randevusu</strong>
+                <span>Sakin bir ortamda yalnızca size ayrılmış terzilik deneyimi</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="philosophy-action">
+            <a href="#surec" class="btn btn-outline">4 Aşamalı Süreci İnceleyin &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ======================================================================
+         HİZMETLER & KOLEKSİYON
+         ====================================================================== -->
+    <section class="services-section" id="hizmetler">
+      <div class="container">
+        <div class="section-head">
+          <span class="editorial-tag editorial-tag-light">Atölye Koleksiyonu</span>
+          <h2>Kişiye Özel Dikim Alanları</h2>
+          <div class="hairline-divider" style="background-color: var(--color-gold);"></div>
+          <p>
+            Her biri bedeninize özel hazırlanan, konforlu ve zamansız giyim disiplinleri.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <div class="service-box">
+            <div class="service-roman">01</div>
+            <h3>Özel Dikim Takım Elbise</h3>
+            <p>
+              İş hayatı ve özel davetler için vücut ölçülerinize göre hazırlanan ceket ve pantolon birlikteliği. Kusursuz omuz çizgisi ve gün boyu süren hareket rahatlığı.
+            </p>
+            <a href="#randevu" class="service-action-link">
+              Randevu Alın &rarr;
+            </a>
+          </div>
+
+          <div class="service-box">
+            <div class="service-roman">02</div>
+            <h3>Smokin & Damatlık</h3>
+            <p>
+              Düğün ve en özel geceleriniz için ipek saten yaka detayları, kaliteli kumaşlar ve zarif el işçiliğiyle hazırlanan özel smokinler.
+            </p>
+            <a href="#randevu" class="service-action-link">
+              Randevu Alın &rarr;
+            </a>
+          </div>
+
+          <div class="service-box">
+            <div class="service-roman">03</div>
+            <h3>Özel Ceket & Blazer</h3>
+            <p>
+              Hafta sonu ve spor-şık kombinleriniz için hafif omuzlu, rahat kalıplı ve modern kesimli el yapımı tek ceketler.
+            </p>
+            <a href="#randevu" class="service-action-link">
+              Randevu Alın &rarr;
+            </a>
+          </div>
+
+          <div class="service-box">
+            <div class="service-roman">04</div>
+            <h3>El Yapımı Gömlek</h3>
+            <p>
+              Yüksek kaliteli pamuk kumaşlar; boyun kalınlığınıza ve kol boyunuza göre tasarlanan özel yaka ve manşet detayları.
+            </p>
+            <a href="#randevu" class="service-action-link">
+              Randevu Alın &rarr;
+            </a>
+          </div>
+
+          <div class="service-box">
+            <div class="service-roman">05</div>
+            <h3>Kaşmir Palto & Kaban</h3>
+            <p>
+              Kış ayları için sıcak tutan, hafif ve dökümlü saf kaşmir ve kaliteli yün dış giyim parçaları.
+            </p>
+            <a href="#randevu" class="service-action-link">
+              Randevu Alın &rarr;
+            </a>
+          </div>
+
+          <div class="service-box">
+            <div class="service-roman">06</div>
+            <h3>Gardırop Danışmanlığı</h3>
+            <p>
+              Mevsimlik kıyafet planlaması, stil uyumu ve mevcut özel dikim parçalarınızın bakım, ütü ve revizyon hizmetleri.
+            </p>
+            <a href="#randevu" class="service-action-link">
+              Randevu Alın &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SÜREÇ (AŞAMALI & MODERN STEPPER UI)
+         ====================================================================== -->
+    <section class="process-section" id="surec">
+      <div class="container">
+        <div class="section-head">
+          <span class="editorial-tag">Özel Dikim Deneyimi</span>
+          <h2>Kişiye Özel Dikim Süreci</h2>
+          <div class="hairline-divider"></div>
+          <p>
+            İlk tanışmadan teslimata kadar her aşamada şeffaf, konforlu ve tamamen sizin beklentilerinize odaklanan 4 adımlı terzilik akışı.
+          </p>
+        </div>
+
+        <div class="process-stepper-grid">
+          <!-- 1. Adım: Randevu & Tanışma -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <span class="step-number">01</span>
+              <span class="step-status">1. Adım</span>
+            </div>
+            <h3 class="step-title">Randevu & Tanışma</h3>
+            <p class="step-desc">
+              Atölyemizde kahveniz eşliğinde tarzınızı, kullanım amacınızı ve isteklerinizi dinliyoruz. Nasıl bir duruş ve model istediğinizi birlikte belirliyoruz.
+            </p>
+            <span class="step-tag">Birebir Görüşme</span>
+          </div>
+
+          <!-- 2. Adım: Kumaş & Ölçüm -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <span class="step-number">02</span>
+              <span class="step-status">2. Adım</span>
+            </div>
+            <h3 class="step-title">Kumaş & Detaylı Ölçüm</h3>
+            <p class="step-desc">
+              Avrupa ve İtalyan kartelalarından kumaşınızı seçiyoruz. Vücut yapınıza ve duruşunuza özel milimetrik ölçülerinizi alarak adınıza özel kalıbınızı çıkarıyoruz.
+            </p>
+            <span class="step-tag">İtalyan Kumaş & Kalıp</span>
+          </div>
+
+          <!-- 3. Adım: Dikim & Prova -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <span class="step-number">03</span>
+              <span class="step-status">3. Adım</span>
+            </div>
+            <h3 class="step-title">Özel Dikim & Prova</h3>
+            <p class="step-desc">
+              Usta ellerde hazırlanan giysinizi tamamlanmadan önce prova ediyoruz. Omuz dengesi, kol boyu ve rahatlık detaylarını üzerinizde birebir test ediyoruz.
+            </p>
+            <span class="step-tag">Hassas Prova Deneyimi</span>
+          </div>
+
+          <!-- 4. Adım: Teslimat & Uyum -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <span class="step-number">04</span>
+              <span class="step-status">4. Adım</span>
+            </div>
+            <h3 class="step-title">Kusursuz Teslimat</h3>
+            <p class="step-desc">
+              Son ütü ve ince işçilik kontrollerinin ardından, özel koruyucu kılıfı ve ahşap askısıyla giysinizi teslim ediyor, üzerinize tam oturmasını garanti ediyoruz.
+            </p>
+            <span class="step-tag">Kusursuz Oturum Garantisi</span>
+          </div>
+        </div>
+
+        <!-- Güvence Bandı -->
+        <div class="process-assurance-banner">
+          <div class="assurance-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="assurance-text">
+            <strong>Kusursuz Kalıp Güvencesi:</strong> Atölyemizden çıkan her takım elbisenin üzerinizde tam istediğiniz gibi durması bizim önceliğimizdir. Teslimat sonrasında da ihtiyaç duyabileceğiniz tüm ince ayarlamalar atölyemiz güvencesindedir.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MÜŞTERİ YORUMLARI & MARQUEE (TESTIMONIAL MARQUEE)
+         ====================================================================== -->
+          <!-- Tek Satır Akıcı Sonsuz Marquee -->
+      <div class="marquee-single-container">
+        <div class="marquee-row-wrapper" aria-label="Müşteri Yorumları">
+          <div class="marquee-track marquee-track-single">
+            <!-- Kart 1: Ömer Faruk Kamil -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Bespoke Takım</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Ölçümden teslimata kadar her aşama kusursuzdu. Ceketin omuz oturuşu ve kumaşın dökümü tam istediğim gibi oldu. Bedenime bu kadar rahat oturan başka bir takım elbise giymedim. Yusuf Bey'in emeğine sağlık.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">ÖFK</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Ömer Faruk Kamil</span>
+                  <span class="testimonial-author-service">Takım Elbise Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 2: Murat Çetinkaya -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Black Tie</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Düğünüm için diktirdiğim ipek şal yaka smokin davette herkesin dikkatini çekti. Beyaz teyelli ara prova sayesinde en ufak potluk dahi kalmadı. Gerçek bir zanaat deneyimi.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">MÇ</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Murat Çetinkaya</span>
+                  <span class="testimonial-author-service">Smokin & Damatlık Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 3: Burak Ergün -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">İtalyan Kumaş</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;İtalya'dan özel karteladan kumaş seçimi yaptık. Beklediğimden çok daha hızlı tedarik edildi ve dikim aşamasındaki ilgi, kahve eşliğindeki sakin sohbet çok özel hissettirdi.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">BE</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Burak Ergün</span>
+                  <span class="testimonial-author-service">İtalyan Kumaş Ceket Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 4: Dr. Selim Yılmaz -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Özel Kalıp</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Hazır giyimde omuz ve kol boyu uymayan biri olarak ilk kez üzerime tam oturan ve gün boyu nefes alan bir suit takıma kavuştum. Kumaş kalitesi ilk dokunuşta fark ediliyor.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">SY</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Dr. Selim Yılmaz</span>
+                  <span class="testimonial-author-service">Suit Takım Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 5: Cemil Aksu -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Dört Mevsim</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Super 150s kumaşın dökümü, el dikişleri ve iç telanın esnekliği muazzam. Yusuf Kesici terzihanesi işini saygıyla ve büyük bir zanaatkarlıkla yapan nadir adreslerden.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">CA</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Cemil Aksu</span>
+                  <span class="testimonial-author-service">Takım Elbise Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 6: Emre Demirkan -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Kaşmir & Yün</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Kışlık kaşmir kabanımın ağırlığı ve kesimi harika oldu. Randevu usulü çalışılması sayesinde atölyede geçirdiğimiz her dakika yalnızca bizimle ilgilenildi. Teşekkürler.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">ED</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Emre Demirkan</span>
+                  <span class="testimonial-author-service">Kaşmir Kaban & Suit Takım Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 7: Kaan Şengül -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Özel Gömlek</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Gömleklerin yaka formu ve kol boyu milimetrik oturdu. Ceketle beraber oluşturulan siluet toplantılarda özgüven veriyor. Düzenli gardırobumu emanet edeceğim.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">KŞ</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Kaan Şengül</span>
+                  <span class="testimonial-author-service">Suit Takım & Gömlek Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 8: Sinan Vural -->
+            <div class="testimonial-card">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars" aria-label="5 yıldız">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Kruvaze Stil</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Orman yeşili kruvaze takım diktirdim. Klasik zarafeti modern hafiflikle buluşturan olağanüstü bir terzilik anlayışı. Tüm çevreme gönül rahatlığıyla öneriyorum.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">SV</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Sinan Vural</span>
+                  <span class="testimonial-author-service">Kruvaze Takım Elbise Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- KESİNTİSİZ DÖNGÜ İÇİN KOPYA BLOK -->
+            <!-- Kart 1 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Bespoke Takım</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Ölçümden teslimata kadar her aşama kusursuzdu. Ceketin omuz oturuşu ve kumaşın dökümü tam istediğim gibi oldu. Bedenime bu kadar rahat oturan başka bir takım elbise giymedim. Yusuf Bey'in emeğine sağlık.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">ÖFK</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Ömer Faruk Kamil</span>
+                  <span class="testimonial-author-service">Takım Elbise Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 2 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Black Tie</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Düğünüm için diktirdiğim ipek şal yaka smokin davette herkesin dikkatini çekti. Beyaz teyelli ara prova sayesinde en ufak potluk dahi kalmadı. Gerçek bir zanaat deneyimi.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">MÇ</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Murat Çetinkaya</span>
+                  <span class="testimonial-author-service">Smokin & Damatlık Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 3 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">İtalyan Kumaş</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;İtalya'dan özel karteladan kumaş seçimi yaptık. Beklediğimden çok daha hızlı tedarik edildi ve dikim aşamasındaki ilgi, kahve eşliğindeki sakin sohbet çok özel hissettirdi.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">BE</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Burak Ergün</span>
+                  <span class="testimonial-author-service">İtalyan Kumaş Ceket Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 4 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Özel Kalıp</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Hazır giyimde omuz ve kol boyu uymayan biri olarak ilk kez üzerime tam oturan ve gün boyu nefes alan bir suit takıma kavuştum. Kumaş kalitesi ilk dokunuşta fark ediliyor.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">SY</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Dr. Selim Yılmaz</span>
+                  <span class="testimonial-author-service">Suit Takım Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 5 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Dört Mevsim</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Super 150s kumaşın dökümü, el dikişleri ve iç telanın esnekliği muazzam. Yusuf Kesici terzihanesi işini saygıyla ve büyük bir zanaatkarlıkla yapan nadir adreslerden.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">CA</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Cemil Aksu</span>
+                  <span class="testimonial-author-service">Takım Elbise Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 6 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Kaşmir & Yün</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Kışlık kaşmir kabanımın ağırlığı ve kesimi harika oldu. Randevu usulü çalışılması sayesinde atölyede geçirdiğimiz her dakika yalnızca bizimle ilgilenildi. Teşekkürler.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">ED</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Emre Demirkan</span>
+                  <span class="testimonial-author-service">Kaşmir Kaban & Suit Takım Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 7 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Özel Gömlek</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Gömleklerin yaka formu ve kol boyu milimetrik oturdu. Ceketle beraber oluşturulan siluet toplantılarda özgüven veriyor. Düzenli gardırobumu emanet edeceğim.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">KŞ</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Kaan Şengül</span>
+                  <span class="testimonial-author-service">Suit Takım & Gömlek Dikimi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kart 8 Kopya -->
+            <div class="testimonial-card" aria-hidden="true">
+              <div class="testimonial-top-row">
+                <div class="testimonial-stars">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <span class="testimonial-badge">Kruvaze Stil</span>
+              </div>
+              <p class="testimonial-text">
+                &ldquo;Orman yeşili kruvaze takım diktirdim. Klasik zarafeti modern hafiflikle buluşturan olağanüstü bir terzilik anlayışı. Tüm çevreme gönül rahatlığıyla öneriyorum.&rdquo;
+              </p>
+              <div class="testimonial-author-wrap">
+                <div class="testimonial-monogram">SV</div>
+                <div class="testimonial-author-meta">
+                  <span class="testimonial-author-name">Sinan Vural</span>
+                  <span class="testimonial-author-service">Kruvaze Takım Elbise Dikimi</span>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         RANDEVU & ATÖLYE İLETİŞİM
+         ====================================================================== -->
+    <section class="booking-section" id="randevu">
+      <div class="container">
+        <div class="section-head">
+          <span class="editorial-tag">Ayrıcalıklı Görüşme</span>
+          <h2>Birebir Atölye Randevusu</h2>
+          <div class="hairline-divider"></div>
+          <p>
+            Her misafirimize kesintisiz zaman ayırabilmek amacıyla görüşmelerimiz randevu usulüyle gerçekleşmektedir.
+          </p>
+        </div>
+
+        <div class="booking-panel">
+          <!-- Sol Form -->
+          <div class="booking-form-area">
+            <h3>Randevu Talep Formu</h3>
+            <p>Tercih ettiğiniz tarih ve hizmet detayını ilettiğinizde en kısa sürede takvim uygunluğunu teyit etmek için sizinle iletişime geçiyoruz.</p>
+
+            <form class="booking-form-grid" id="appointmentForm">
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="clientName">Adınız Soyadınız *</label>
+                  <input type="text" id="clientName" class="form-input" placeholder="Ahmet Yılmaz" required>
+                </div>
+                <div class="form-field">
+                  <label for="clientPhone">Telefon Numaranız *</label>
+                  <input type="tel" id="clientPhone" class="form-input" placeholder="05XX XXX XX XX" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="clientService">İlgilendiğiniz Hizmet</label>
+                  <select id="clientService" class="form-input">
+                    <option value="Özel Dikim Takım Elbise">Özel Dikim Takım Elbise</option>
+                    <option value="Smokin & Damatlık">Smokin & Damatlık</option>
+                    <option value="Özel Ceket & Blazer">Özel Ceket & Blazer</option>
+                    <option value="El Yapımı Gömlek">El Yapımı Gömlek</option>
+                    <option value="Kaşmir Palto / Kaban">Kaşmir Palto / Kaban</option>
+                    <option value="Gardırop Küratörlüğü / Diğer">Gardırop Küratörlüğü / Diğer</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="clientDate">Tercih Edilen Tarih</label>
+                  <input type="date" id="clientDate" class="form-input">
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="clientNotes">Belirtmek İstediğiniz Detay veya Not</label>
+                <textarea id="clientNotes" class="form-input" placeholder="Özel bir etkinlik tarihi, kumaş tercihi veya notunuz..."></textarea>
+              </div>
+
+              <div class="form-button-group">
+                <button type="submit" class="btn btn-primary" id="submitBookingBtn">
+                  Randevu Talebini İlet
+                </button>
+                <button type="button" class="btn btn-whatsapp" id="quickWaBtn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.777.82 2.791.82 3.181 0 5.768-2.587 5.768-5.766.001-3.182-2.585-5.806-5.768-5.806zm4.195 8.163c-.177.498-.876.945-1.229.988-.344.043-.767.065-2.227-.538-1.748-.722-2.883-2.5-2.97-2.618-.088-.117-.707-.942-.707-1.797 0-.854.444-1.277.603-1.453.158-.176.347-.22.463-.22.115 0 .232.001.332.006.107.006.248-.04.388.297.147.352.502 1.224.545 1.312.043.088.072.191.015.308-.058.118-.088.191-.176.294-.088.103-.186.23-.266.309-.088.087-.18.183-.077.36.103.176.457.754.981 1.22.673.599 1.24.785 1.417.873.176.088.28.074.383-.044.103-.117.442-.513.56-.689.117-.176.235-.147.397-.088.161.059 1.026.484 1.203.572.176.088.294.132.338.206.044.073.044.426-.133.924z"/>
+                  </svg>
+                  WhatsApp ile Doğrudan Yazın
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Sağ Bilgi -->
+          <div class="booking-info-area">
+            <div>
+              <span class="editorial-tag editorial-tag-light">Atölye Bilgileri</span>
+              <h3>By Yusuf Kesici Terzihanesi</h3>
+              <p class="atelier-statement">
+                Zanaatın ve sessiz lüksün buluştuğu atölyemizde sizleri ağırlamaktan onur duyarız. Tüm görüşmeler ve provalar birebir özel olarak gerçekleşmektedir.
+              </p>
+
+              <div class="atelier-contact-lines">
+                <div class="contact-line">
+                  <span class="contact-label">Çalışma Düzeni & Mesai</span>
+                  <span class="contact-val">Randevu Taleplerine Göre Mesai<br><small style="opacity: 0.75;">Görüşmeler teyitli randevu saatine göre planlanmaktadır.</small></span>
+                </div>
+
+                <div class="contact-line">
+                  <span class="contact-label">Konum / Lokasyon</span>
+                  <span class="contact-val">Grand Cevahir Otel<br><small style="opacity: 0.75;">Şişli / İstanbul · Özel otopark ve vale mevcuttur.</small></span>
+                </div>
+
+                <div class="contact-line">
+                  <span class="contact-label">Telefon & WhatsApp</span>
+                  <span class="contact-val">
+                    <a href="tel:+905333045353" class="contact-phone-link">+90 (533) 304 53 53</a><br>
+                    <a href="https://wa.me/905333045353?text=Merhaba%20Yusuf%20Kesici%20At%C3%B6lyesi%2C%20randevu%20talebinde%20bulunmak%20istiyorum." target="_blank" rel="noopener noreferrer" class="contact-wa-link">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block; vertical-align:middle; margin-right:4px;"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.777.82 2.791.82 3.181 0 5.768-2.587 5.768-5.766.001-3.182-2.585-5.806-5.768-5.806zm4.195 8.163c-.177.498-.876.945-1.229.988-.344.043-.767.065-2.227-.538-1.748-.722-2.883-2.5-2.97-2.618-.088-.117-.707-.942-.707-1.797 0-.854.444-1.277.603-1.453.158-.176.347-.22.463-.22.115 0 .232.001.332.006.107.006.248-.04.388.297.147.352.502 1.224.545 1.312.043.088.072.191.015.308-.058.118-.088.191-.176.294-.088.103-.186.23-.266.309-.088.087-.18.183-.077.36.103.176.457.754.981 1.22.673.599 1.24.785 1.417.873.176.088.28.074.383-.044.103-.117.442-.513.56-.689.117-.176.235-.147.397-.088.161.059 1.026.484 1.203.572.176.088.294.132.338.206.044.073.044.426-.133.924z"/></svg>WhatsApp Hattı: 0533 304 53 53
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="atelier-private-note">
+              Atölye mesaimiz ve görüşmelerimiz randevu taleplerine göre planlanmaktadır. Lütfen gelmeden önce randevu alınız.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-layout">
+        <div class="footer-about">
+          <div class="brand-logo">
+            <img src="assets/logo.png" alt="By Yusuf Kesici Logo" width="42" height="42">
+            <span class="brand-name">By Yusuf Kesici</span>
+          </div>
+          <p>
+            Geleneksel usta terzilik anlayışını dünyanın en seçkin İtalyan ve Avrupa kumaşlarıyla buluşturuyor; tamamen bedeninize özel, kusursuz takımlar dikiyoruz.
+          </p>
+        </div>
+
+        <div class="footer-nav">
+          <h4>Bölümler</h4>
+          <ul>
+            <li><a href="#hero">Giriş</a></li>
+            <li><a href="#felsefe">Hakkımızda</a></li>
+            <li><a href="#hizmetler">Hizmetler</a></li>
+            <li><a href="#surec">Süreç</a></li>
+            <li><a href="#yorumlar">Misafir Yorumları</a></li>
+            <li><a href="#randevu">İletişim & Randevu</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav">
+          <h4>Terzilik Standartları</h4>
+          <ul>
+            <li><a href="#hizmetler">Kişiye Özel Kalıp</a></li>
+            <li><a href="#hizmetler">İtalyan Kumaş & Dikim</a></li>
+            <li><a href="#surec">Birebir Prova Deneyimi</a></li>
+            <li><a href="#randevu">Grand Cevahir Otel Randevu</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copy">
+          <a href="https://kofstudio.com.tr" target="_blank" rel="noopener noreferrer" class="footer-kof-link">Kof Studio</a> · © 2026 By Yusuf Kesici · Tüm Hakları Saklıdır.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       HIZLI WHATSAPP BUTONU
+       ====================================================================== -->
+  <a href="https://wa.me/905333045353?text=Merhaba%20Yusuf%20Kesici%20At%C3%B6lyesi%2C%20randevu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." 
+     class="floating-whatsapp" 
+     id="floatingWhatsappBtn"
+     target="_blank" 
+     rel="noopener noreferrer" 
+     aria-label="WhatsApp ile Randevu Talep Edin">
+    <svg viewBox="0 0 24 24">
+      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.777.82 2.791.82 3.181 0 5.768-2.587 5.768-5.766.001-3.182-2.585-5.806-5.768-5.806zm4.195 8.163c-.177.498-.876.945-1.229.988-.344.043-.767.065-2.227-.538-1.748-.722-2.883-2.5-2.97-2.618-.088-.117-.707-.942-.707-1.797 0-.854.444-1.277.603-1.453.158-.176.347-.22.463-.22.115 0 .232.001.332.006.107.006.248-.04.388.297.147.352.502 1.224.545 1.312.043.088.072.191.015.308-.058.118-.088.191-.176.294-.088.103-.186.23-.266.309-.088.087-.18.183-.077.36.103.176.457.754.981 1.22.673.599 1.24.785 1.417.873.176.088.28.074.383-.044.103-.117.442-.513.56-.689.117-.176.235-.147.397-.088.161.059 1.026.484 1.203.572.176.088.294.132.338.206.044.073.044.426-.133.924z"/>
+    </svg>
+  </a>
+
+  <!-- ======================================================================
+       ONAY MODALI
+       ====================================================================== -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal-window">
+      <button class="modal-close-icon" id="closeModalBtn" aria-label="Kapat">&times;</button>
+      <div style="width: 56px; height: 56px; margin: 0 auto 1.5rem auto; border-radius: 50%; background: var(--color-gold-subtle); border: 1.5px solid var(--color-gold); display: flex; align-items: center; justify-content: center; color: var(--color-gold-dark);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h3>Randevu Talebiniz Alındı</h3>
+      <p>
+        By Yusuf Kesici Terzihanesi'ne gösterdiğiniz ilgi için teşekkür ederiz. Usta terzimiz veya asistanımız en kısa sürede takvim teyidi için sizinle iletişime geçecektir.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+        <a href="#" id="modalWhatsappLink" target="_blank" class="btn btn-whatsapp" style="width: 100%;">
+          WhatsApp Üzerinden Hemen Teyit Edin
+        </a>
+        <button type="button" class="btn btn-outline" id="modalDoneBtn" style="width: 100%;">
+          Kapat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html>

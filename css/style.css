@@ -1,0 +1,1876 @@
+/* ==========================================================================
+   BY YUSUF KESİCİ - BESPOKE & SARTORIAL TAILORING
+   Atölye Web Sitesi · Minimalist & Prestijli Tasarım Sistemi
+   ========================================================================== */
+
+:root {
+  /* Marka Renk Paleti (Logodaki derin İngiliz yeşili ve antik altın tonu) */
+  --color-green-primary: #002e14;
+  --color-green-dark: #011d0d;
+  --color-green-deep: #001509;
+  --color-green-surface: #043819;
+  --color-green-light: #084a22;
+  
+  /* Antik Pirinç / Altın Tonları (Logodaki Centilmen Silueti) */
+  --color-gold: #c59b27;
+  --color-gold-light: #dfb94d;
+  --color-gold-dark: #987514;
+  --color-gold-subtle: rgba(197, 155, 39, 0.08);
+  --color-gold-border: rgba(197, 155, 39, 0.25);
+  --color-gold-glow: rgba(197, 155, 39, 0.4);
+  
+  /* Saf Beyaz & Aydınlık Zeminler */
+  --color-cream: #ffffff;
+  --color-cream-subtle: #f8faf8;
+  --color-cream-border: rgba(0, 46, 20, 0.08);
+  
+  /* Tipografi Renkleri */
+  --color-text-main: #141a16;
+  --color-text-muted: #4e5a52;
+  --color-text-light: #7b8880;
+  
+  /* Tipografi Aileleri (Montserrat) */
+  --font-serif: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-display: 'Montserrat', sans-serif;
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  
+  /* Düzen & Ölçüler */
+  --container-max: 1200px;
+  --header-height: 72px;
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-luxury: 0 16px 45px rgba(0, 30, 13, 0.08);
+}
+
+/* Temel Sıfırlama */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-text-main);
+  line-height: 1.75;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sayfa Açılışında Kaydırmayı Kitleme (Perde bitene kadar) */
+body.curtain-locked {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ==========================================================================
+   TAM EKRAN KUMAŞ KESEN MAKAS AÇILIŞ ANİMASYONU (INTRO CURTAIN)
+   ========================================================================== */
+.intro-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  pointer-events: auto;
+  background-color: var(--color-green-deep);
+  overflow: hidden;
+}
+
+/* Sol ve Sağ Kumaş Kanatları */
+.curtain-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background-color: var(--color-green-primary);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 80%),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.04) 0px, rgba(0, 0, 0, 0.04) 2px, transparent 2px, transparent 4px);
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  transition: transform 0.95s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.curtain-panel.curtain-left {
+  left: 0;
+  transform: translateX(0);
+  border-right: 1px dashed rgba(197, 155, 39, 0.35);
+}
+
+.curtain-panel.curtain-right {
+  right: 0;
+  transform: translateX(0);
+  border-left: 1px dashed rgba(197, 155, 39, 0.35);
+}
+
+/* Kumaş Kesilip Açıldığında */
+.intro-curtain.opened .curtain-left {
+  transform: translateX(-102%);
+}
+
+.intro-curtain.opened .curtain-right {
+  transform: translateX(102%);
+}
+
+.intro-curtain.finished {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+/* Ortadaki Kesim İzi */
+.curtain-cut-track {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.curtain-cut-line {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 2px;
+  height: 0%;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, transparent, var(--color-gold-light) 70%, #ffffff 100%);
+  box-shadow: 0 0 12px var(--color-gold);
+  transition: height 2.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Ortada Marka Mührü */
+.intro-brand {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+  color: #ffffff;
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.intro-logo-wrap {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.25rem auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid var(--color-gold);
+  box-shadow: 0 0 25px rgba(197, 155, 39, 0.35);
+  background: var(--color-green-deep);
+}
+
+.intro-logo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.intro-brand-name {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 0;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+
+.intro-brand-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  font-weight: 500;
+}
+
+.intro-curtain.opened .intro-brand {
+  opacity: 0;
+  transform: translate(-50%, -60%);
+}
+
+/* Yükselen Terzi Makası */
+.scissors-cutter {
+  position: absolute;
+  left: 50%;
+  bottom: -160px;
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Makasın Alttan Yukarı Tırmanması */
+.intro-curtain.running .scissors-cutter {
+  animation: scissorCutAscent 2.4s cubic-bezier(0.25, 1, 0.4, 1) forwards;
+}
+
+.intro-curtain.running .curtain-cut-line {
+  height: 100%;
+}
+
+@keyframes scissorCutAscent {
+  0% {
+    bottom: -160px;
+    opacity: 0;
+  }
+  8% {
+    bottom: -40px;
+    opacity: 1;
+  }
+  45% {
+    bottom: 45vh;
+  }
+  85% {
+    bottom: 95vh;
+    opacity: 1;
+  }
+  100% {
+    bottom: 120vh;
+    opacity: 0;
+  }
+}
+
+/* Terzi Makası Bıçak Kesim Hareketi */
+.scissors-svg {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+.blade-left {
+  transform-origin: 60px 85px;
+  animation: snipLeftBlade 0.28s ease-in-out infinite alternate;
+}
+
+.blade-right {
+  transform-origin: 60px 85px;
+  animation: snipRightBlade 0.28s ease-in-out infinite alternate;
+}
+
+@keyframes snipLeftBlade {
+  0% { transform: rotate(-13deg); }
+  100% { transform: rotate(1deg); }
+}
+
+@keyframes snipRightBlade {
+  0% { transform: rotate(13deg); }
+  100% { transform: rotate(-1deg); }
+}
+
+/* Girişi Geç Butonu */
+.intro-skip-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+  background: rgba(0, 46, 20, 0.4);
+  border: 1px solid var(--color-gold-border);
+  color: var(--color-gold-light);
+  padding: 0.5rem 1.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: var(--transition-smooth);
+}
+
+.intro-skip-btn:hover {
+  background: var(--color-gold);
+  color: var(--color-green-deep);
+  border-color: var(--color-gold);
+}
+
+/* ==========================================================================
+   TIPOGRAFİ & EDİTÖRYAL BAŞLIKLAR
+   ========================================================================== */
+h1, h2, h3, h4, .serif {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--color-green-primary);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.editorial-tag {
+  display: block;
+  font-size: 0.72rem;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-weight: 600;
+  color: var(--color-gold-dark);
+  margin-bottom: 1rem;
+}
+
+.editorial-tag-light {
+  color: var(--color-gold-light);
+}
+
+.section-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 4.5rem auto;
+}
+
+.section-head h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.section-head p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.hairline-divider {
+  width: 48px;
+  height: 1px;
+  background-color: var(--color-gold);
+  margin: 1.5rem auto;
+}
+
+/* Butonlar */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--color-green-primary);
+  color: #ffffff;
+  border-color: var(--color-green-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-green-dark);
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 46, 20, 0.2);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-green-primary);
+  border-color: rgba(0, 46, 20, 0.35);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-green-primary);
+  color: #ffffff;
+  border-color: var(--color-green-primary);
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  background-color: #063d1a;
+  color: #ffffff;
+  border: 1px solid var(--color-gold-border);
+}
+
+.btn-whatsapp:hover {
+  background-color: #095425;
+  border-color: var(--color-gold);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   HEADER / ÜST MENÜ (SADELEŞTİRİLMİŞ & LOGO YEŞİLİ)
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 1000;
+  background-color: var(--color-green-primary); /* Logo yeşili #002e14 */
+  border-bottom: 1px solid rgba(197, 155, 39, 0.2);
+  transition: var(--transition-smooth);
+}
+
+.site-header.scrolled {
+  background-color: rgba(0, 46, 20, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 20, 9, 0.4);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+}
+
+.brand-logo img {
+  width: 42px;
+  height: 42px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid var(--color-gold-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.brand-name {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 2.25rem;
+}
+
+.nav-link {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  position: relative;
+  padding: 0.35rem 0;
+  transition: var(--transition-smooth);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 1.5px;
+  background-color: var(--color-gold-light);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.btn-nav-cta {
+  padding: 0.65rem 1.45rem !important;
+  font-size: 0.74rem !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-gold) !important;
+  background: transparent !important;
+  border-radius: 3px !important;
+  text-transform: uppercase;
+  transition: var(--transition-smooth) !important;
+  cursor: pointer;
+}
+
+.btn-nav-cta:hover {
+  background: var(--color-gold) !important;
+  color: var(--color-green-deep) !important;
+  box-shadow: 0 4px 15px rgba(197, 155, 39, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   HERO BÖLÜMÜ
+   ========================================================================== */
+.hero-section {
+  padding-top: calc(var(--header-height) + 3.5rem);
+  padding-bottom: 5.5rem;
+  position: relative;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.18fr;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+.hero-content {
+  max-width: 580px;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  line-height: 1.14;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--color-gold-dark);
+  font-weight: 600;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: 2.2rem;
+  font-weight: 300;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.hero-appointment-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.82rem;
+  color: var(--color-green-primary);
+  background: var(--color-gold-subtle);
+  border: 1px solid var(--color-gold-border);
+  padding: 0.65rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.hero-appointment-note svg {
+  color: var(--color-gold-dark);
+  flex-shrink: 0;
+}
+
+.hero-visual {
+  position: relative;
+}
+
+.hero-image-frame {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 32, 14, 0.16);
+  border: 1px solid var(--color-gold-border);
+}
+
+.hero-image-frame img {
+  width: 100%;
+  aspect-ratio: 1024 / 1016;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-image-frame:hover img {
+  transform: scale(1.02);
+}
+
+.hero-caption-card {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  background: rgba(0, 32, 14, 0.90);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.15rem 1.4rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-gold-border);
+  color: #ffffff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.hero-caption-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--color-gold-light);
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-caption-text {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   FELSEFE & ZANAAT (PHILOSOPHY)
+   ========================================================================== */
+.philosophy-section {
+  padding: 8rem 0;
+  background-color: #ffffff;
+  border-top: 1px solid var(--color-cream-border);
+  border-bottom: 1px solid var(--color-cream-border);
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5.5rem;
+  align-items: center;
+}
+
+.philosophy-visual {
+  position: relative;
+}
+
+.philosophy-image {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-luxury);
+  border: 1px solid var(--color-gold-border);
+}
+
+.philosophy-image img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.philosophy-quote {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.6rem;
+  background: var(--color-cream);
+  border-left: 2.5px solid var(--color-gold);
+  border-radius: 0 4px 4px 0;
+}
+
+.philosophy-quote p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.08rem;
+  color: var(--color-green-primary);
+  line-height: 1.55;
+}
+
+.philosophy-quote cite {
+  display: block;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  margin-top: 0.45rem;
+  font-weight: 600;
+}
+
+.philosophy-content h2 {
+  font-size: 2.75rem;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+}
+
+.philosophy-lead {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-bottom: 1.75rem;
+  font-weight: 300;
+}
+
+.philosophy-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.p-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 1.25rem;
+  background: rgba(0, 46, 20, 0.04);
+  border: 1px solid rgba(0, 46, 20, 0.10);
+  border-radius: 6px;
+  transition: var(--transition-smooth);
+}
+
+.p-feature-item:hover {
+  background: rgba(0, 46, 20, 0.08);
+  border-color: rgba(0, 46, 20, 0.22);
+  box-shadow: 0 6px 18px rgba(0, 46, 20, 0.06);
+  transform: translateX(4px);
+}
+
+.p-feature-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-gold-subtle);
+  color: var(--color-gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--color-gold-border);
+}
+
+.p-feature-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-feature-text strong {
+  font-size: 0.94rem;
+  color: var(--color-green-primary);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.p-feature-text span {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 0.15rem;
+  line-height: 1.4;
+}
+
+.philosophy-action {
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   KUMAŞLAR (SEÇKİN DOKUMA EVLERİ)
+   ========================================================================== */
+.fabrics-section {
+  padding: 8rem 0;
+  background-color: var(--color-cream);
+}
+
+.fabrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
+}
+
+.fabric-item {
+  background: #ffffff;
+  padding: 3rem 2.25rem;
+  border-radius: 2px;
+  border: 1px solid var(--color-cream-border);
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.fabric-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-gold-border);
+  box-shadow: var(--shadow-luxury);
+}
+
+.fabric-item-category {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.fabric-item h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.fabric-item p {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.fabric-meta {
+  border-top: 1px solid var(--color-cream-border);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.fabric-meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.fabric-meta-label {
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.fabric-meta-value {
+  color: var(--color-green-primary);
+  font-weight: 600;
+}
+
+/* Kumaş Markaları Şeridi */
+.mills-banner {
+  margin-top: 5rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--color-cream-border);
+  border-bottom: 1px solid var(--color-cream-border);
+  text-align: center;
+}
+
+.mills-banner-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-bottom: 1.75rem;
+  font-weight: 600;
+}
+
+.mills-names {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.mill-brand {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  color: var(--color-green-primary);
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   HİZMETLER / ATÖLYE KOLEKSİYONU
+   ========================================================================== */
+.services-section {
+  padding: 8rem 0;
+  background-color: var(--color-green-primary);
+  color: #ffffff;
+}
+
+.services-section .section-head h2 {
+  color: #ffffff;
+}
+
+.services-section .section-head p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
+}
+
+.service-box {
+  background-color: var(--color-green-surface);
+  border: 1px solid rgba(197, 155, 39, 0.22);
+  padding: 3.25rem 2.5rem;
+  border-radius: 2px;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.service-box:hover {
+  transform: translateY(-6px);
+  background-color: var(--color-green-light);
+  border-color: var(--color-gold);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.service-roman {
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  color: var(--color-gold-light);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  line-height: 1;
+}
+
+.service-box h3 {
+  font-size: 1.75rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.service-box p {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.service-action-link {
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.service-action-link:hover {
+  color: #ffffff;
+  gap: 0.75rem;
+}
+
+/* ==========================================================================
+   ÖZEL KUMAŞ TEDARİĞİ (HIGHLIGHT CARD)
+   ========================================================================== */
+.fabric-item-highlight {
+  background-color: var(--color-green-primary) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-gold) !important;
+  box-shadow: 0 16px 36px rgba(0, 30, 13, 0.25) !important;
+  position: relative;
+}
+
+.fabric-item-highlight .fabric-item-category {
+  color: var(--color-gold-light) !important;
+}
+
+.fabric-item-highlight h3 {
+  color: #ffffff !important;
+}
+
+.fabric-item-highlight p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.fabric-item-highlight .fabric-meta {
+  border-top: 1px solid rgba(197, 155, 39, 0.3) !important;
+}
+
+.fabric-item-highlight .fabric-meta-label {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.fabric-item-highlight .fabric-meta-value {
+  color: var(--color-gold-light) !important;
+}
+
+.highlight-badge-pill {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(197, 155, 39, 0.2);
+  border: 1px solid var(--color-gold-light);
+  color: var(--color-gold-light);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   MODERN & SADE SÜREÇ (STEPPER UI)
+   ========================================================================== */
+.process-section {
+  padding: 7.5rem 0;
+  background-color: #ffffff;
+  border-top: 1px solid var(--color-cream-border);
+}
+
+.process-stepper-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.step-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 46, 20, 0.09);
+  border-radius: 6px;
+  padding: 2.25rem 1.65rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  box-shadow: 0 4px 18px rgba(0, 30, 13, 0.03);
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-gold);
+  box-shadow: var(--shadow-luxury);
+}
+
+.step-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(0, 46, 20, 0.07);
+  padding-bottom: 0.85rem;
+}
+
+.step-number {
+  font-family: var(--font-sans);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--color-green-primary);
+  line-height: 1;
+}
+
+.step-status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+}
+
+.step-title {
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-green-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.step-desc {
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.step-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-gold-dark);
+  background: var(--color-gold-subtle);
+  border: 1px solid var(--color-gold-border);
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.process-assurance-banner {
+  background: rgba(0, 46, 20, 0.04);
+  border: 1px solid rgba(0, 46, 20, 0.10);
+  border-left: 3px solid var(--color-gold);
+  border-radius: 6px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.assurance-icon {
+  color: var(--color-gold-dark);
+  flex-shrink: 0;
+}
+
+.assurance-text {
+  font-size: 0.9rem;
+  color: var(--color-text-main);
+  line-height: 1.6;
+}
+
+.assurance-text strong {
+  color: var(--color-green-primary);
+}
+
+/* ==========================================================================
+   MÜŞTERİ YORUMLARI & MARQUEE BİLEŞENİ (21ST.DEV MARQUEE)
+   ========================================================================== */
+.testimonials-section {
+  padding: 7.5rem 0 6rem 0;
+  background-color: #fafbfa;
+  border-top: 1px solid var(--color-cream-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee-single-container,
+.marquee-dual-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+.marquee-row-wrapper {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+.marquee-track-single {
+  animation: marqueeLeft 45s linear infinite;
+}
+
+.marquee-track-left {
+  animation: marqueeLeft 34s linear infinite;
+}
+
+.marquee-track-right {
+  animation: marqueeRight 36s linear infinite;
+}
+
+.marquee-row-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeLeft {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marqueeRight {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.testimonial-card {
+  width: 375px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 46, 20, 0.08);
+  border-radius: 8px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 18px rgba(0, 30, 13, 0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+  box-shadow: 0 12px 28px rgba(0, 46, 20, 0.08);
+}
+
+.testimonial-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.testimonial-stars {
+  display: flex;
+  gap: 2px;
+  color: var(--color-gold);
+}
+
+.testimonial-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  background: var(--color-gold-subtle);
+  border: 1px solid var(--color-gold-border);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.testimonial-text {
+  font-size: 0.88rem;
+  color: var(--color-text-main);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  font-weight: 400;
+}
+
+.testimonial-author-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border-top: 1px solid rgba(0, 46, 20, 0.06);
+  padding-top: 1rem;
+}
+
+.testimonial-monogram {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-green-primary);
+  color: var(--color-gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  border: 1.5px solid var(--color-gold-border);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 30, 13, 0.15);
+}
+
+.testimonial-author-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-author-name {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--color-green-primary);
+  line-height: 1.25;
+}
+
+.testimonial-author-service {
+  font-size: 0.74rem;
+  color: var(--color-gold-dark);
+  font-weight: 600;
+  margin-top: 0.2rem;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   RANDEVU & ATÖLYE İLETİŞİM
+   ========================================================================== */
+.booking-section {
+  padding: 8rem 0;
+  background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-subtle) 100%);
+}
+
+.booking-panel {
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid var(--color-gold-border);
+  box-shadow: var(--shadow-luxury);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.booking-form-area {
+  padding: 4.5rem;
+}
+
+.booking-form-area h3 {
+  font-size: 2.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.booking-form-area p {
+  color: var(--color-text-muted);
+  font-size: 0.96rem;
+  margin-bottom: 2.5rem;
+}
+
+.booking-form-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-field label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--color-green-primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  background-color: var(--color-cream);
+  border: 1px solid rgba(0, 46, 20, 0.12);
+  border-radius: 2px;
+  color: var(--color-text-main);
+  font-size: 0.92rem;
+  transition: var(--transition-smooth);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px var(--color-gold-subtle);
+}
+
+textarea.form-input {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-button-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.booking-info-area {
+  background-color: var(--color-green-primary);
+  color: #ffffff;
+  padding: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid var(--color-gold-border);
+}
+
+.booking-info-area h3 {
+  color: #ffffff;
+  font-size: 2.15rem;
+  margin-bottom: 1.25rem;
+}
+
+.atelier-statement {
+  font-size: 0.94rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.75;
+  margin-bottom: 2.75rem;
+}
+
+.atelier-contact-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.contact-line {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.contact-val {
+  font-size: 0.94rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.contact-val a {
+  color: #ffffff;
+}
+
+.contact-val a:hover {
+  color: var(--color-gold-light);
+}
+
+.contact-phone-link {
+  font-size: 1.18rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: 0.03em;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+}
+
+.contact-wa-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.88rem !important;
+  color: #4ade80 !important;
+  font-weight: 600;
+  transition: color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.contact-wa-link:hover {
+  color: #86efac !important;
+  transform: translateX(3px);
+}
+
+.atelier-private-note {
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 2px solid var(--color-gold);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.site-footer {
+  background-color: var(--color-green-deep);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 5.5rem 0 3rem 0;
+  border-top: 1px solid rgba(197, 155, 39, 0.2);
+}
+
+.footer-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 4.5rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-about .brand-logo {
+  margin-bottom: 1.5rem;
+}
+
+.footer-about .brand-name {
+  color: #ffffff;
+}
+
+.footer-about p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footer-nav h4 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.footer-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-nav a {
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.04em;
+}
+
+.footer-nav a:hover {
+  color: var(--color-gold-light);
+  transform: translateX(4px);
+}
+
+.footer-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2.5rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+}
+
+.footer-copy {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+}
+
+.footer-kof-link {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-kof-link:hover {
+  color: var(--color-gold-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ==========================================================================
+   MODAL & FLOATING BUTON
+   ========================================================================== */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 2.25rem;
+  right: 2.25rem;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-green-primary);
+  border: 1.5px solid var(--color-gold);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 30, 13, 0.35);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.08) translateY(-3px);
+  background: var(--color-green-dark);
+  box-shadow: 0 15px 35px rgba(0, 30, 13, 0.5);
+}
+
+.floating-whatsapp svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 22, 10, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-window {
+  background: #ffffff;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid var(--color-gold-border);
+  box-shadow: var(--shadow-luxury);
+  padding: 3.5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  transform: translateY(20px);
+  transition: var(--transition-smooth);
+}
+
+.modal-backdrop.active .modal-window {
+  transform: translateY(0);
+}
+
+.modal-close-icon {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.modal-window h3 {
+  font-size: 2.2rem;
+  margin-bottom: 0.85rem;
+}
+
+.modal-window p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLET & MOBİL)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .hero-content {
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .hero-actions {
+    justify-content: center;
+  }
+  
+  .hero-specs {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .hero-visual {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  
+  .philosophy-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .fabrics-grid,
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .process-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .booking-panel {
+    grid-template-columns: 1fr;
+  }
+  
+  .booking-info-area {
+    border-left: none;
+    border-top: 1px solid var(--color-gold-border);
+  }
+  
+  .footer-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  .process-stepper-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+  
+  .hero-title {
+    font-size: 2.75rem;
+  }
+  
+  .section-head h2 {
+    font-size: 2.25rem;
+  }
+  
+  .hero-specs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  
+  .fabrics-grid,
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .process-stepper-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .process-assurance-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .testimonial-card {
+    width: 310px;
+    padding: 1.4rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .booking-form-area {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .booking-info-area {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .footer-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .footer-bottom-bar {
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .footer-copy {
+    display: inline-block;
+    text-align: center;
+    font-size: 0.78rem;
+  }
+
+  /* Mobil Menü */
+  .mobile-toggle {
+    display: block;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    background-color: var(--color-green-primary);
+    flex-direction: column;
+    padding: 2.5rem 2rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid rgba(197, 155, 39, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transform: translateY(-150%);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+  }
+  
+  .nav-menu.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .nav-actions .btn {
+    display: none;
+  }
+}
